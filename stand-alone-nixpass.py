@@ -357,7 +357,7 @@ while running == True:
 
     elif start == 'abt':
         about = '''
-        Pass was created to help organize, generate, and store
+        NixPass was created to help organize, generate, and store
         passwords. It allows password workspaces to be encrypted
         with AES-256 and decrypted with a single password, giving
         access to all entered credentials within that workspace.
