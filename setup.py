@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="nixpass",
-    version="1.0.0",
+    version="2.0",
     author="Shane Guymon",
     author_email="shane.eguymon@gmail.com",
     description="A cli password management tool",
@@ -17,9 +17,10 @@ setuptools.setup(
         "console_scripts": ['nixpass = nixpass.nixpass:main']
         },
     classifiers=[
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: POSIX :: Linux",
+        "Topic :: Terminals",
     ],
     install_requires=['pycrypto'],
     python_requires='>=3',
