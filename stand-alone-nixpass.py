@@ -1,11 +1,11 @@
 #!env/bin/python3
 #Your virtual environment here
 #######################
-# NixPass   -   [@]   #
-#  v.1.0     -    \   #
+# nixpass   -   [@]   #
+# v.2.0      -    \   #
 #             -   =\  #
 #######################
-#  -   seg-vault   -   #
+#  😸   seg-vault   😸 #
 #######################
 
 #Crypto library for encryption of password workspace file, for generation of IV and 32 byte key, respectively
@@ -159,7 +159,8 @@ def openFile(name):
             'l'+'\t\t'+'list entry names'+'\n'+
             'entry name'+'\t' + 'display username and password' + '\n'
             + 'e' +'\t\t'+'edit entry'+'\n'+
-            'r'+'\t\t'+'remove entry'+'\n'+
+            'r'+'\t\t'+'rename entry'+'\n'+
+            'd'+'\t\t'+'delete entry' + '\n' +
             'm'+'\t\t'+'main menu')
 
         elif start == 'a':
@@ -177,10 +178,24 @@ def openFile(name):
                 myDict[entry_name][entry_username] = entrypass[0]
                 entrypass=[None,None]
             elif give_or_gen == 'g' or give_or_gen == 'G':
-                passLen = int(input('Password Length? '))
-                genPass = gen_passwd(passLen)
-                myDict[entry_name] = {}
-                myDict[entry_name][entry_username] = genPass
+                goodNum = True
+                try:
+                    passLen = int(input('Password Length? '))
+                    genPass = gen_passwd(passLen)
+                    myDict[entry_name] = {}
+                    myDict[entry_name][entry_username] = genPass
+                except:
+                    print('\n' + 'Please enter valid number')
+                    goodNum = False
+                while goodNum == False:
+                    try:
+                        passLen = int(input('Password Length? '))
+                        genPass = gen_passwd(passLen)
+                        myDict[entry_name] = {}
+                        myDict[entry_name][entry_username] = genPass
+                        goodNum = True
+                    except:
+                        print('\n' + 'Please enter valid number')
 
         elif start == 'l':
             for x,y in myDict.items():
@@ -188,40 +203,126 @@ def openFile(name):
 
         elif start == 'e':
             entry_name = input('Entry name to edit? ')
-            task = input('Edit (u)sername or (p)assword? ')
-            if task == 'u' or task == 'U':
-                username = input('Existing Username? ')
-                new_user = input('What should it be changed too? ')
-                print('updating username')
-                try:
-                    myDict[entry_name][new_user] = myDict[entry_name].pop(username)
-                    print('updated username to '+new_user)
-                except:
-                    print('unable to edit username, please confirm spelling')
-            if task == 'p' or task == 'P':
-                username = input('Which user is it for? ')
-                new_pass = getpass('What shoud the new password be? ')
-                confirm_pass = getpass('Confirm password: ')
-                while new_pass != confirm_pass:
-                    print('Passwords don\'t match, please re-enter')
-                    new_pass = getpass('What shoud the new password be? ')
-                    confirm_pass = getpass('Confirm password: ')
-                print('changing password for '+username)
-                try:
-                    myDict[entry_name][username] = new_pass
-                    print('password changed for username ' + username)
-                except:
-                    print('unable to edit password, please check username\'s spelling')
+            goodName = False
+            for x,y in myDict.items():
+                if entry_name == x:
+                    goodName = True
+            if goodName == True:
+                task = input('Edit (u)sername or (p)assword? ')
+
+                if task == 'u' or task == 'U':
+                    goodUser = False
+                    username = input('Existing Username? ')
+                    for x,y in myDict[entry_name].items():
+                        if username == x:
+                            goodUser = True
+                    if goodUser == True:
+                        new_user = input('What should it be changed too? ')
+                        print('updating username')
+                        try:
+                            myDict[entry_name][new_user] = myDict[entry_name].pop(username)
+                            print('updated username to '+new_user)
+                        except:
+                            print('unable to edit username, please confirm spelling')
+                    else:
+                        print('Username not found')
+
+                if task == 'p' or task == 'P':
+                    username = input('Username? ')
+                    goodUser = False
+                    for x,y in myDict[entry_name].items():
+                        if username == x:
+                            goodUser = True
+                    if goodUser == True:
+                        give_or_gen = input('(e)nter password or (g)enerate password? ')
+
+                        if give_or_gen == 'e' or give_or_gen == 'E':
+                            entrypass = [None,None]
+                            entrypass[0] = getpass('Entry Password: ')
+                            entrypass[1] = getpass('Confirm Entry Password: ')
+                            while entrypass[0] != entrypass[1]:
+                                entrypass[0] = getpass('Entry Password: ')
+                                entrypass[1] = getpass('Confirm Entry Password: ')
+                            try:
+                                print('changing password for ' + username)
+                                myDict[entry_name][username] = entrypass[0]
+                                print('password changed for username ' + username)
+                            except:
+                                print('unable to edit password, please check username\'s spelling')
+                            entrypass = [None,None]
+
+                        elif give_or_gen == 'g' or give_or_gen == 'G':
+                            goodNum = True
+                            try:
+                                passLen = int(input('Password Length? '))
+                                genPass = gen_passwd(passLen)
+                                print('changing password for ' + username)
+                                try:
+                                    myDict[entry_name][username] = genPass
+                                    print('password changed for username ' + username)
+                                except:
+                                    print('unable to edit password, please check username\'s spelling')
+                            except:
+                                print('\n' + 'Please enter valid number')
+                                goodNum = False
+                            while goodNum == False:
+                                try:
+                                    passLen = int(input('Password Length? '))
+                                    genPass = gen_passwd(passLen)
+                                    print('changing password for ' + username)
+                                    try:
+                                        myDict[entry_name][username] = genPass
+                                        print('password changed for username ' + username)
+                                        goodNum = True
+                                    except:
+                                        print('unable to edit password, please check username\'s spelling')
+                                except:
+                                    print('\n' + 'Please enter valid number')
+
+                    else:
+                        print('Username not found')
+            else:
+                print('Entry name not found')
+
         elif start == 'r':
-            rm = input('Which entry to remove? ')
-            confirm_rm = input('Are you sure you want to remove' + rm + '?(y/n) ')
-            if confirm_rm == 'y' or confirm_rm == 'Y':
-                print('removing ' + rm)
+            entry_name = input('Entry name to rename? ')
+            goodName = False
+            for x,y in myDict.items():
+                if entry_name == x:
+                    goodName = True
+            if goodName == True:
+                new_name = input('New entry name? ')
+                conf_name = input('Confirm new entry name? ')
+                while new_name != conf_name:
+                    new_name = input('New entry name? ')
+                    conf_name = input('Confirm new entry name? ')
+                    print('renaming entry')
                 try:
-                    del myDict[rm]
-                    print('removed ' + rm +' successfully')
+                    myDict[new_name] = myDict.pop(entry_name)
+                    print('renamed entry to '+new_name)
                 except:
-                    print('unable to remove' + rm + 'please confirm the spelling')
+                    print('unable to rename entry, please confirm spelling')
+            else:
+                print('Entry name not found')
+
+        elif start == 'd':
+            entry_name = input('Which entry to delete? ')
+            goodName = False
+            for x,y in myDict.items():
+                if entry_name == x:
+                    goodName = True
+            if goodName == True:
+                confirm_rm = input('Are you sure you want to delete ' + entry_name + ' ?(y/n) ')
+                if confirm_rm == 'y' or confirm_rm == 'Y':
+                    print('deleting ' + entry_name)
+                    try:
+                        del myDict[entry_name]
+                        print('deleted ' + entry_name +' successfully')
+                    except:
+                        print('unable to delete ' + entry_name + ' please confirm the spelling')
+            else:
+                print('Entry name not found')
+
         elif start == 'm':
             new_file = open(stordir + name,'wb')
             new_file.write(encrypt_data(key[0],json.dumps(myDict)))
@@ -237,6 +338,7 @@ def openFile(name):
                             print(a,'\n'+b)
             else:
                 print('command or entry not found')
+
 
 def removeFile(masterList,rm):
     removing = True
@@ -296,8 +398,8 @@ running = True
 
 intro = '''
 #######################
-# NixPass   -   [@]   #
-#  v.1.0     -    \   #
+# nixpass   -   [@]   #
+#  v.2.0     -    \   #
 #             -   =\  #
 #######################'''+'\n'
 print(intro)
@@ -314,14 +416,14 @@ masterList = open(stordir+'master-list','a').close()
 while running == True:
 
     start = input('\n'+'Command (h for help): ')
-    
+
     if start == 'h':
         print('C'+'\t\t'+'create a new pass file' + '\n' +
         'l'+'\t\t'+'list pass files'+'\n'+
         'filename'+'\t' + 'enter file name to open pass file' + '\n'
         + 'r' +'\t\t'+'remove pass file'+'\n'+
-        'q'+'\t\t'+'quit NixPass'+'\n'+
-        'abt'+'\t\t'+'about NixPass')
+        'q'+'\t\t'+'quit nixpass'+'\n'+
+        'abt'+'\t\t'+'about nixpass')
 
     elif start == 'c':
         myFile = open(stordir +'master-list','r')
@@ -357,7 +459,7 @@ while running == True:
 
     elif start == 'abt':
         about = '''
-        NixPass was created to help organize, generate, and store
+        nixpass was created to help organize, generate, and store
         passwords. It allows password workspaces to be encrypted
         with AES-256 and decrypted with a single password, giving
         access to all entered credentials within that workspace.
