@@ -2,22 +2,24 @@ Hello fellow person,
 
 nixpass was created to help organize, generate, and store passwords. It allows password workspaces to be encrypted with AES-256 and decrypted with a single password, giving access to all entered credentials within that workspace.
 
-Work flow was designed to create organized spaces called password files. The designed workflow is as follows:
+Work flow was designed to create organized spaces called password files. These password files have entries which contain a username & password.
 
-Home
+For example with the password file
+
+##### Home
 
 
-which has entries
+has entries 2 entries, each having their own username and password
 
-Google
+###### Google
 
- -username
- -password
+ * username
+ * password
 
-Reddit
+###### Reddit
 
- -username
- -password
+ * username
+ * password
 
 
 
@@ -30,21 +32,22 @@ To open a workspace, enter the name of the Workspace and authenticate. This will
 To view the username/password of a password file entry, enter the entry name:
 
 
-Reddit
+##### Reddit
 
 
 This will provide the username/password
 
 
-foo bar
+###### foo
+###### bar
 
 
 
 
 
----Installation---
+### Installation
 
--Via Pip-
+#### Via Pip
 
 1.Create virtual environment, was developed with python 3.6 modules
 
@@ -54,7 +57,7 @@ foo bar
 
 
 
--Via Standalone-
+#### Via Standalone Script
 
 1. Download stand-alone-nixpass.py from github - https://github.com/seg-vault/nixpass
 
@@ -69,4 +72,4 @@ foo bar
 
 Hope this helps in your password management/storage needs
 
--Shane Guymon, aka. seg-vault 😸  11/1/2018
+-Shane Guymon, aka. seg-vault :smiley_cat:  11/1/2018
