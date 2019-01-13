@@ -11,12 +11,12 @@ For example with the password file
 
 has entries 2 entries, each having their own username and password
 
-###### Google
+##### Google
 
  * username
  * password
 
-###### Reddit
+##### Reddit
 
  * username
  * password
