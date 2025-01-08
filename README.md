@@ -67,7 +67,3 @@ This will provide the username/password
 
 4. Include path to your virtual environment in the !# at the top
 
-
-
-
-Hope this helps in your password management/storage needs
