@@ -1,4 +1,4 @@
-Hello fellow person,
+Hello,
 
 nixpass was created to help organize, generate, and store passwords. It allows password workspaces to be encrypted with AES-256 and decrypted with a single password, giving access to all entered credentials within that workspace.
 
@@ -71,5 +71,3 @@ This will provide the username/password
 
 
 Hope this helps in your password management/storage needs
-
--Shane Guymon, aka. seg-vault :smiley_cat:  11/1/2018
